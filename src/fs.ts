@@ -26,8 +26,19 @@ export function getDenoJSON(cwd = process.cwd()) {
   return getJSONConfigFile(cwd, 'deno.json') || getJSONConfigFile(cwd, 'deno.jsonc') || {}
 }
 
-export function getConfig(agent: Agent, cwd = process.cwd()) {
-  if (agent === 'deno')
-    return getDenoJSON(cwd)
-  return getPackageJSON(cwd)
+// support https://www.npmjs.com/package/npm-scripts-info conventions
+export function getScriptsConfig(agent: Agent, cwd = process.cwd()): { scripts: Record<string, string>; scriptsInfo: Record<string, string> } {
+  if (agent === 'deno') {
+    const denoJSON = getDenoJSON(cwd)
+    return {
+      scripts: denoJSON.tasks || {},
+      scriptsInfo: denoJSON['tasks-info'] || {},
+    }
+  }
+
+  const pkg = getPackageJSON(cwd)
+  return {
+    scripts: pkg.scripts || {},
+    scriptsInfo: pkg['scripts-info'] || {},
+  }
 }
