@@ -30,6 +30,7 @@
     "nu": "bin/nu.mjs",
     "nx": "bin/nx.mjs",
     "na": "bin/na.mjs",
+    "ns": "bin/ns.mjs",
     "nun": "bin/nun.mjs"
   },
   "files": [
@@ -40,6 +41,7 @@
     "prepublishOnly": "npm run build",
     "dev": "esno src/commands/ni.ts",
     "nr": "esno src/commands/nr.ts",
+    "ns": "esno src/commands/ns.ts",
     "build": "unbuild",
     "stub": "unbuild --stub",
     "release": "bumpp && npm publish",
