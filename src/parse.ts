@@ -10,6 +10,12 @@ export class UnsupportedCommand extends Error {
   }
 }
 
+export class UnsupportedCommand extends Error {
+  constructor({ agent, command }: { agent: Agent; command: Command }) {
+    super(`Command "${command}" is not support by agent "${agent}"`)
+  }
+}
+
 export function getCommand(
   agent: Agent,
   command: Command,

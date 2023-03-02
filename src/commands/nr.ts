@@ -4,7 +4,7 @@ import c from 'kleur'
 import { Fzf } from 'fzf'
 import { dump, load } from '../storage'
 import { parseNr } from '../parse'
-import { getPackageJSON } from '../fs'
+import { getScriptsConfig } from '../fs'
 import { runCli } from '../runner'
 
 runCli(async (agent, args, ctx) => {
@@ -19,11 +19,7 @@ runCli(async (agent, args, ctx) => {
   }
 
   if (args.length === 0) {
-    // support https://www.npmjs.com/package/npm-scripts-info conventions
-    const pkg = getPackageJSON(ctx?.cwd)
-    const scripts = pkg.scripts || {}
-    const scriptsInfo = pkg['scripts-info'] || {}
-
+    const { scripts, scriptsInfo } = getScriptsConfig(agent, ctx?.cwd)
     const names = Object.entries(scripts) as [string, string][]
 
     if (!names.length)
